@@ -21,11 +21,11 @@
 
                     <div class="rounded-2xl border border-orange-100 bg-orange-50 p-5">
                         <p class="font-bold text-slate-900 mb-2">Catatan penting</p>
-                        <p>Pastikan pickup dilakukan tepat waktu. Untuk komplain makanan basi atau tidak layak, laporkan menggunakan data pesanan yang selesai agar evaluasi toko dan supplier bisa ditindaklanjuti.</p>
+                        <p>Pastikan pickup dilakukan tepat waktu. Untuk komplain makanan basi atau tidak layak, laporkan menggunakan data pesanan yang selesai agar evaluasi toko bisa ditindaklanjuti.</p>
                     </div>
 
                     <div class="flex flex-wrap gap-3 pt-2">
-                        <a href="{{ route('terms.show') }}" class="inline-flex items-center rounded-xl bg-slate-100 px-5 py-3 text-sm font-bold text-slate-700 hover:bg-slate-200 transition">Baca Terms & Conditions</a>
+                        <a href="{{ route('terms.customer') }}" class="inline-flex items-center rounded-xl bg-slate-100 px-5 py-3 text-sm font-bold text-slate-700 hover:bg-slate-200 transition">Baca Terms & Conditions Customer</a>
                         <a href="{{ route('dashboard') }}" class="inline-flex items-center rounded-xl bg-emerald-500 px-5 py-3 text-sm font-bold text-white hover:bg-emerald-600 transition">Lanjut ke Dashboard</a>
                     </div>
                 </div>

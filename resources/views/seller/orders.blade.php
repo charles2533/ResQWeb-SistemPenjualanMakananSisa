@@ -46,7 +46,8 @@
                                     <td class="py-5 px-6 text-sm">
                                         <p class="font-bold text-gray-900">Nilai order: Rp {{ number_format($order->total_price, 0, ',', '.') }}</p>
                                         <p class="text-gray-500">Pendapatan toko: Rp {{ number_format($order->subtotal_price, 0, ',', '.') }}</p>
-                                        <p class="text-orange-600">Biaya admin platform: Rp {{ number_format($order->admin_fee, 0, ',', '.') }}</p>
+                                        <p class="text-orange-600">Biaya admin customer: Rp {{ number_format($order->admin_fee, 0, ',', '.') }}</p>
+                                        <p class="text-xs text-gray-400 mt-1">Saldo seller masuk penuh setelah order diselesaikan. Komisi 10% dipotong saat withdraw.</p>
                                     </td>
                                     <td class="py-5 px-6 text-sm text-gray-500 font-medium">
                                         {{ \Carbon\Carbon::parse($order->food->pickup_time_start)->format('H:i') }} - {{ \Carbon\Carbon::parse($order->food->pickup_time_end)->format('H:i') }}

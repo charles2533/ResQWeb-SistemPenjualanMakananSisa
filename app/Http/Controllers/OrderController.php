@@ -22,7 +22,7 @@ class OrderController extends Controller
         $food = Food::findOrFail($food_id);
         $quantity = $request->quantity;
         $subtotal = $food->discount_price * $quantity;
-        $adminFee = ceil($subtotal * (config('resq.admin_fee_percentage', 5) / 100));
+        $adminFee = (float) config('resq.customer_admin_fee', 1000);
         $totalPrice = $subtotal + $adminFee;
 
         // Cek apakah stok mencukupi
@@ -69,7 +69,13 @@ class OrderController extends Controller
             ->whereIn('order_id', $orders->pluck('id'))
             ->get()
             ->groupBy('order_id')
-            ->map(fn ($items) => $items->pluck('id', 'target_type')->all());
+            ->map(fn ($items) => $items->mapWithKeys(fn ($review) => [
+                $review->target_type => [
+                    'id' => $review->id,
+                    'rating' => $review->rating,
+                    'comment' => $review->comment,
+                ],
+            ])->all());
 
         return view('customer.orders', compact('orders', 'reviews'));
     }
@@ -96,8 +102,18 @@ class OrderController extends Controller
             abort(403, 'Anda tidak diizinkan melakukan aksi ini.');
         }
 
-        $order->update(['status' => 'completed']);
+        if ($order->status === 'completed') {
+            return back()->with('success', 'Pesanan ini sudah lebih dulu ditandai selesai.');
+        }
 
-        return back()->with('success', 'Pesanan berhasil diselesaikan. Terima kasih sudah membantu mengurangi food waste!');
+        DB::transaction(function () use ($order) {
+            $order->update(['status' => 'completed']);
+
+            $seller = $order->food->seller()->lockForUpdate()->firstOrFail();
+            $seller->increment('seller_balance', $order->subtotal_price);
+            $seller->increment('seller_total_earned', $order->subtotal_price);
+        });
+
+        return back()->with('success', 'Pesanan berhasil diselesaikan. Nilai pesanan sudah masuk ke saldo seller.');
     }
 }

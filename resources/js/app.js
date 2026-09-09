@@ -72,6 +72,28 @@ const showGlobalLoading = (message) => {
     });
 };
 
+const showValidationAlert = (message) => {
+    if (!message) {
+        return;
+    }
+
+    if (!window.Swal) {
+        window.alert(message);
+        return;
+    }
+
+    window.Swal.fire({
+        icon: 'warning',
+        title: 'Cek input dulu',
+        text: message,
+        confirmButtonText: 'Oke',
+        customClass: {
+            popup: 'rounded-3xl',
+            confirmButton: 'px-6 py-2.5 rounded-xl font-bold shadow-md',
+        },
+    });
+};
+
 const submitProtectedForm = (form, submitter = null) => {
     if (!form || form.dataset.submitting === 'true') {
         return;
@@ -132,3 +154,18 @@ document.addEventListener('submit', async (event) => {
         submitProtectedForm(form, submitter);
     }
 });
+
+document.addEventListener(
+    'invalid',
+    (event) => {
+        const field = event.target;
+
+        if (!(field instanceof HTMLInputElement || field instanceof HTMLSelectElement || field instanceof HTMLTextAreaElement)) {
+            return;
+        }
+
+        event.preventDefault();
+        showValidationAlert(field.validationMessage);
+    },
+    true,
+);

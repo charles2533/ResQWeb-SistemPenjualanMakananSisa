@@ -2,11 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\User;
+use App\Models\SellerWithdrawal;
 use App\Models\Order;
-use App\Models\Food;
 use App\Models\Review;
-use Illuminate\Http\Request;
+use App\Models\User;
 
 class AdminController extends Controller
 {
@@ -21,7 +20,9 @@ class AdminController extends Controller
         
         // Estimasi perputaran uang di platform
         $totalRevenue = Order::where('status', 'completed')->sum('total_price');
-        $platformRevenue = Order::where('status', 'completed')->sum('admin_fee');
+        $customerAdminRevenue = Order::where('status', 'completed')->sum('admin_fee');
+        $sellerCommissionRevenue = SellerWithdrawal::sum('commission_amount');
+        $platformRevenue = $customerAdminRevenue + $sellerCommissionRevenue;
 
         $ratingAverages = Review::selectRaw('target_type, AVG(rating) as avg_rating, COUNT(*) as total_reviews')
             ->groupBy('target_type')
@@ -39,6 +40,8 @@ class AdminController extends Controller
             'totalCustomers', 
             'foodRescued', 
             'totalRevenue', 
+            'customerAdminRevenue',
+            'sellerCommissionRevenue',
             'platformRevenue',
             'ratingAverages',
             'recentOrders'

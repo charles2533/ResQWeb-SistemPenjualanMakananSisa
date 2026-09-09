@@ -3,7 +3,7 @@
         <div class="max-w-4xl mx-auto sm:px-6 lg:px-8">
             
             <div class="mb-6">
-                <a href="{{ route('seller.dashboard') }}" class="text-sm font-semibold text-gray-500 hover:text-orange-500 mb-4 inline-block">&larr; Kembali</a>
+                <a href="{{ route('seller.inventory') }}" class="text-sm font-semibold text-gray-500 hover:text-orange-500 mb-4 inline-block">&larr; Kembali</a>
                 <h1 class="text-3xl font-extrabold text-gray-900 tracking-tight">Input Makanan Sisa</h1>
             </div>
 

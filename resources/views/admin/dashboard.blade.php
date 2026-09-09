@@ -37,6 +37,7 @@
                     <div>
                         <p class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-1">Pendapatan Admin</p>
                         <h3 class="text-2xl font-extrabold text-slate-800">Rp {{ number_format($platformRevenue, 0, ',', '.') }}</h3>
+                        <p class="text-xs text-slate-500 mt-1">Fee customer Rp {{ number_format($customerAdminRevenue, 0, ',', '.') }} + komisi seller Rp {{ number_format($sellerCommissionRevenue, 0, ',', '.') }}</p>
                     </div>
                 </div>
 
@@ -61,7 +62,7 @@
                 </div>
             </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
                 <div class="bg-white rounded-2xl border border-slate-100 p-6">
                     <p class="text-xs font-bold uppercase tracking-wider text-slate-400 mb-1">Rating Aplikasi</p>
                     <h3 class="text-3xl font-black text-slate-900">{{ optional($ratingAverages->get('application'))->avg_rating ? number_format($ratingAverages->get('application')->avg_rating, 1) : '-' }}/5</h3>
@@ -71,11 +72,6 @@
                     <p class="text-xs font-bold uppercase tracking-wider text-slate-400 mb-1">Rating Toko</p>
                     <h3 class="text-3xl font-black text-slate-900">{{ optional($ratingAverages->get('store'))->avg_rating ? number_format($ratingAverages->get('store')->avg_rating, 1) : '-' }}/5</h3>
                     <p class="text-sm text-slate-500 mt-1">{{ optional($ratingAverages->get('store'))->total_reviews ?? 0 }} review</p>
-                </div>
-                <div class="bg-white rounded-2xl border border-slate-100 p-6">
-                    <p class="text-xs font-bold uppercase tracking-wider text-slate-400 mb-1">Rating Supplier</p>
-                    <h3 class="text-3xl font-black text-slate-900">{{ optional($ratingAverages->get('supplier'))->avg_rating ? number_format($ratingAverages->get('supplier')->avg_rating, 1) : '-' }}/5</h3>
-                    <p class="text-sm text-slate-500 mt-1">{{ optional($ratingAverages->get('supplier'))->total_reviews ?? 0 }} review</p>
                 </div>
             </div>
 

@@ -12,7 +12,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('order_id')->constrained('orders')->cascadeOnDelete();
             $table->foreignId('customer_id')->constrained('users')->cascadeOnDelete();
-            $table->enum('target_type', ['application', 'store', 'supplier']);
+            $table->enum('target_type', ['application', 'store']);
             $table->foreignId('target_user_id')->nullable()->constrained('users')->nullOnDelete();
             $table->unsignedTinyInteger('rating');
             $table->text('comment')->nullable();

@@ -37,7 +37,7 @@
                     <div class="space-y-3 mb-6">
                         <label class="flex items-start gap-3 text-sm text-gray-600">
                             <input type="checkbox" name="accepted_terms" value="1" class="mt-1 rounded border-gray-300 text-orange-500 focus:ring-orange-500" {{ old('accepted_terms') ? 'checked' : '' }} required>
-                            <span>Saya menyetujui <a href="{{ route('terms.show') }}" class="font-bold text-orange-600">Terms & Conditions</a>, termasuk aturan no-pickup, komplain makanan basi, dan pembagian tanggung jawab.</span>
+                            <span>Saya menyetujui <a href="{{ route('terms.customer') }}" class="font-bold text-orange-600">Terms & Conditions Customer</a>, termasuk admin fee Rp {{ number_format(config('resq.customer_admin_fee'), 0, ',', '.') }}, aturan no-pickup, komplain makanan basi, dan pembagian tanggung jawab.</span>
                         </label>
                         <label class="flex items-start gap-3 text-sm text-gray-600">
                             <input type="checkbox" name="accepted_pnc" value="1" class="mt-1 rounded border-gray-300 text-orange-500 focus:ring-orange-500" {{ old('accepted_pnc') ? 'checked' : '' }} required>

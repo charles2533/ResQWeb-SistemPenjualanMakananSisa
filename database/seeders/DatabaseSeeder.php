@@ -39,29 +39,5 @@ class DatabaseSeeder extends Seeder
             'role' => 'customer',
         ]);
 
-        // 4. Buat Data Makanan Sisa untuk Pak Budi
-        $food1 = Food::create([
-            'seller_id' => $seller->id,
-            'name' => 'Nasi Ayam Penyet Lengkap',
-            'description' => 'Nasi, ayam penyet paha, tahu, tempe, sambal bawang mantap. Masih sangat layak, sisa jualan hari ini.',
-            'original_price' => 20000,
-            'discount_price' => 10000,
-            'stock' => 5,
-            'pickup_time_start' => '20:00',
-            'pickup_time_end' => '22:00',
-            'status' => 'available',
-        ]);
-
-        Food::create([
-            'seller_id' => $seller->id,
-            'name' => 'Ayam Bakar Madu (Tanpa Nasi)',
-            'description' => 'Ayam bakar madu ukuran besar, sisa stok belum terjual.',
-            'original_price' => 15000,
-            'discount_price' => 7000,
-            'stock' => 3,
-            'pickup_time_start' => '21:00',
-            'pickup_time_end' => '22:30',
-            'status' => 'available',
-        ]);
     }
 }

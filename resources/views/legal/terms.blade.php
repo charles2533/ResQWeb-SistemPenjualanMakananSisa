@@ -9,7 +9,7 @@
                         <p class="mb-2 text-xs font-black uppercase tracking-[0.24em] text-orange-100">Legal</p>
                         <h1 class="text-3xl font-black sm:text-4xl">Terms & Conditions ResQ-Food</h1>
                         <p class="mt-3 max-w-3xl text-sm leading-6 text-orange-50 sm:text-base">
-                            Ketentuan ini mengatur tanggung jawab customer, toko, supplier/penyedia makanan, dan platform saat terjadi pemesanan, no-pickup, maupun komplain kualitas makanan.
+                            Ketentuan ini mengatur tanggung jawab customer, toko, dan platform saat terjadi pemesanan, no-pickup, maupun komplain kualitas makanan.
                         </p>
                     </div>
                 </div>
@@ -28,8 +28,8 @@
 
                     <section class="rounded-2xl border border-slate-100 bg-white p-6">
                         <h2 class="mb-3 text-lg font-extrabold text-slate-900">3. Jika Makanan Basi atau Tidak Layak Konsumsi</h2>
-                        <p>Mitra toko/supplier wajib memastikan makanan yang diunggah masih layak konsumsi pada saat pickup. Jika makanan diterima dalam kondisi basi, rusak, atau tidak sesuai deskripsi, tanggung jawab utama berada pada mitra penjual/supplier sebagai pihak yang menyiapkan barang.</p>
-                        <p class="mt-3">Platform ResQ-Food bertindak sebagai perantara transaksi dan fasilitator penyaluran makanan. Platform membantu pencatatan komplain dan evaluasi, tetapi tidak menggantikan tanggung jawab mutu produk yang berada pada pihak toko/supplier.</p>
+                        <p>Mitra toko wajib memastikan makanan yang diunggah masih layak konsumsi pada saat pickup. Jika makanan diterima dalam kondisi basi, rusak, atau tidak sesuai deskripsi, tanggung jawab utama berada pada pihak toko sebagai pihak yang menyiapkan barang.</p>
+                        <p class="mt-3">Platform ResQ-Food bertindak sebagai perantara transaksi dan fasilitator penyaluran makanan. Platform membantu pencatatan komplain dan evaluasi, tetapi tidak menggantikan tanggung jawab mutu produk yang berada pada pihak toko.</p>
                     </section>
 
                     <section class="rounded-2xl border border-slate-100 bg-white p-6">
@@ -44,7 +44,7 @@
 
                     <section class="rounded-2xl border border-slate-100 bg-white p-6">
                         <h2 class="mb-3 text-lg font-extrabold text-slate-900">6. Rating dan Umpan Balik</h2>
-                        <p>Customer dapat memberi rating untuk aplikasi, toko, dan supplier/penyedia makanan setelah pesanan selesai. Data rating digunakan untuk peningkatan layanan, evaluasi kualitas mitra, dan kebutuhan analisis lean canvas.</p>
+                        <p>Customer dapat memberi rating untuk aplikasi dan toko setelah pesanan selesai. Data rating digunakan untuk peningkatan layanan, evaluasi kualitas mitra, dan kebutuhan analisis lean canvas.</p>
                     </section>
 
                     <div class="flex flex-wrap gap-3 border-t border-orange-100 pt-4">

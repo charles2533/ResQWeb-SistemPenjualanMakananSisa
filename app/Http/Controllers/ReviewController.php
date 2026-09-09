@@ -13,7 +13,7 @@ class ReviewController extends Controller
     public function store(Request $request, Order $order): RedirectResponse
     {
         $validated = $request->validate([
-            'target_type' => 'required|in:application,store,supplier',
+            'target_type' => 'required|in:application,store',
             'rating' => 'required|integer|min:1|max:5',
             'comment' => 'nullable|string|max:500',
         ]);
@@ -35,7 +35,7 @@ class ReviewController extends Controller
                 'target_type' => $validated['target_type'],
             ],
             [
-                'target_user_id' => in_array($validated['target_type'], ['store', 'supplier'], true)
+                'target_user_id' => $validated['target_type'] === 'store'
                     ? $order->food->seller_id
                     : null,
                 'rating' => $validated['rating'],

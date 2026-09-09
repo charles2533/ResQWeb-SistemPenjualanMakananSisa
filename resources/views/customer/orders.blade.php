@@ -1,6 +1,6 @@
 <x-app-layout>
-    <div class="py-8 bg-gray-50 min-h-screen">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+    <div class="py-4 sm:py-6 bg-gray-50 min-h-screen">
+        <div class="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
             @if(session('success'))
                 <div class="mb-6 bg-green-50 border border-green-200 text-green-700 px-6 py-4 rounded-xl flex items-center gap-3 shadow-sm">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
@@ -90,10 +90,21 @@
 
                                         @if($order->status === 'completed')
                                             <div class="space-y-3 min-w-[240px]">
-                                                @foreach(['application' => 'Aplikasi', 'store' => 'Toko', 'supplier' => 'Supplier'] as $type => $label)
+                                                @foreach(['application' => 'Aplikasi', 'store' => 'Toko'] as $type => $label)
                                                     @if(isset($reviewed[$type]))
-                                                        <div class="rounded-xl border border-emerald-100 bg-emerald-50 px-3 py-2 text-xs font-bold text-emerald-700">
-                                                            Rating {{ $label }} sudah dikirim.
+                                                        <div class="rounded-xl border border-emerald-100 bg-emerald-50 px-3 py-3 text-emerald-700">
+                                                            <p class="mb-2 text-[11px] font-bold uppercase tracking-wide text-emerald-500">Rating {{ $label }}</p>
+                                                            <div class="mb-2 flex items-center gap-1 text-amber-400">
+                                                                @for($i = 1; $i <= 5; $i++)
+                                                                    <svg class="h-5 w-5 {{ $i <= ($reviewed[$type]['rating'] ?? 0) ? 'fill-current' : 'fill-none stroke-current text-emerald-200' }}" viewBox="0 0 24 24" {{ $i <= ($reviewed[$type]['rating'] ?? 0) ? '' : 'stroke-width=1.8' }} aria-hidden="true">
+                                                                        <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"></path>
+                                                                    </svg>
+                                                                @endfor
+                                                                <span class="ml-1 text-xs font-bold text-emerald-700">{{ $reviewed[$type]['rating'] }}/5</span>
+                                                            </div>
+                                                            @if(!empty($reviewed[$type]['comment']))
+                                                                <p class="text-xs leading-5 text-emerald-700/80">{{ $reviewed[$type]['comment'] }}</p>
+                                                            @endif
                                                         </div>
                                                     @else
                                                         <form
@@ -109,12 +120,23 @@
                                                             @csrf
                                                             <input type="hidden" name="target_type" value="{{ $type }}">
                                                             <label class="block text-[11px] font-bold uppercase tracking-wide text-slate-400 mb-2">Rating {{ $label }}</label>
-                                                            <select name="rating" class="w-full rounded-lg border-slate-200 text-sm" required>
-                                                                <option value="">Pilih</option>
+                                                            <div class="star-rating">
                                                                 @for($i = 5; $i >= 1; $i--)
-                                                                    <option value="{{ $i }}">{{ $i }}/5</option>
+                                                                    <input
+                                                                        id="rating-{{ $order->id }}-{{ $type }}-{{ $i }}"
+                                                                        type="radio"
+                                                                        name="rating"
+                                                                        value="{{ $i }}"
+                                                                        class="star-rating__input"
+                                                                        required
+                                                                    >
+                                                                    <label for="rating-{{ $order->id }}-{{ $type }}-{{ $i }}" class="star-rating__label" aria-label="{{ $i }} bintang">
+                                                                        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                                                                            <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"></path>
+                                                                        </svg>
+                                                                    </label>
                                                                 @endfor
-                                                            </select>
+                                                            </div>
                                                             <textarea name="comment" rows="2" class="mt-2 w-full rounded-lg border-slate-200 text-sm" placeholder="Catatan singkat (opsional)"></textarea>
                                                             <button type="submit" data-loading-text="Mengirim..." class="mt-2 w-full rounded-lg bg-slate-900 px-3 py-2 text-xs font-bold text-white hover:bg-slate-800 transition">Kirim Rating</button>
                                                         </form>

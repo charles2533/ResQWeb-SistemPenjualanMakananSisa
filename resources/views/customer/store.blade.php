@@ -18,6 +18,14 @@
                 </div>
             </div>
 
+            <div class="grid grid-cols-1 gap-4 mb-8">
+                <div class="bg-white rounded-2xl shadow-sm border border-slate-100 p-5">
+                    <p class="text-xs font-bold uppercase tracking-wider text-slate-400 mb-1">Rating Toko</p>
+                    <p class="text-3xl font-black text-slate-900">{{ optional($ratingSummary->get('store'))->avg_rating ? number_format($ratingSummary->get('store')->avg_rating, 1) : '-' }}/5</p>
+                    <p class="text-sm text-slate-500 mt-1">{{ optional($ratingSummary->get('store'))->total_reviews ?? 0 }} ulasan customer</p>
+                </div>
+            </div>
+
             <h4 class="text-xl font-extrabold mb-6 text-slate-900">List of Project (Makanan)</h4>
 
             <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6">
@@ -30,13 +38,26 @@
                                 <div class="flex items-center gap-2">
                                     <p class="text-2xl font-extrabold text-slate-900">Rp {{ number_format($food->discount_price, 0, ',', '.') }}</p>
                                 </div>
+                                <p class="text-xs text-slate-500 mt-2">Biaya admin tetap Rp {{ number_format(config('resq.customer_admin_fee'), 0, ',', '.') }} ditampilkan saat checkout.</p>
                             </div>
                         </div>
                         <div class="p-5 pt-0">
-                            <form action="{{ route('order.store', $food->id) }}" method="POST">
+                            <form
+                                action="{{ route('order.store', $food->id) }}"
+                                method="POST"
+                                data-confirm-submit
+                                data-confirm-title="Assign order ini?"
+                                data-confirm-text="Order akan dibuat dan diteruskan ke penjual. Pastikan kamu setuju dengan tanggung jawab pickup."
+                                data-confirm-button="Ya, assign"
+                                data-loading-message="Order sedang dibuat."
+                            >
                                 @csrf
                                 <input type="hidden" name="quantity" value="1">
-                                <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-2.5 px-4 rounded-xl shadow-sm transition">
+                                <label class="flex items-start gap-2 text-xs text-slate-500 mb-3">
+                                    <input type="checkbox" name="accepted_order_terms" value="1" class="mt-0.5 rounded border-gray-300 text-blue-600 focus:ring-blue-500" required>
+                                    <span>Setuju <a href="{{ route('terms.customer') }}" class="font-bold text-blue-600">T&C Customer</a> dan tanggung jawab pickup.</span>
+                                </label>
+                                <button type="submit" data-loading-text="Membuat order..." class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-2.5 px-4 rounded-xl shadow-sm transition">
                                     + Assign Order
                                 </button>
                             </form>

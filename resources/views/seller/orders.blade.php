@@ -22,7 +22,7 @@
                                 <th class="py-4 px-6 text-xs font-bold text-gray-400 uppercase tracking-wider">ID Pesanan</th>
                                 <th class="py-4 px-6 text-xs font-bold text-gray-400 uppercase tracking-wider">Nama Pembeli</th>
                                 <th class="py-4 px-6 text-xs font-bold text-gray-400 uppercase tracking-wider">Item Makanan</th>
-                                <th class="py-4 px-6 text-xs font-bold text-gray-400 uppercase tracking-wider">Total Nominal</th>
+                                <th class="py-4 px-6 text-xs font-bold text-gray-400 uppercase tracking-wider">Keuangan</th>
                                 <th class="py-4 px-6 text-xs font-bold text-gray-400 uppercase tracking-wider">Waktu Ambil</th>
                                 <th class="py-4 px-6 text-xs font-bold text-gray-400 uppercase tracking-wider text-right">Status / Aksi</th>
                             </tr>
@@ -43,8 +43,11 @@
                                         <p class="text-sm font-bold text-gray-800">{{ $order->food->name }}</p>
                                         <p class="text-xs text-gray-500 mt-0.5">Qty: {{ $order->quantity }} porsi</p>
                                     </td>
-                                    <td class="py-5 px-6 font-extrabold text-gray-900">
-                                        Rp {{ number_format($order->total_price, 0, ',', '.') }}
+                                    <td class="py-5 px-6 text-sm">
+                                        <p class="font-bold text-gray-900">Nilai order: Rp {{ number_format($order->total_price, 0, ',', '.') }}</p>
+                                        <p class="text-gray-500">Pendapatan toko: Rp {{ number_format($order->subtotal_price, 0, ',', '.') }}</p>
+                                        <p class="text-orange-600">Biaya admin customer: Rp {{ number_format($order->admin_fee, 0, ',', '.') }}</p>
+                                        <p class="text-xs text-gray-400 mt-1">Saldo seller masuk penuh setelah order diselesaikan. Komisi 10% dipotong saat withdraw.</p>
                                     </td>
                                     <td class="py-5 px-6 text-sm text-gray-500 font-medium">
                                         {{ \Carbon\Carbon::parse($order->food->pickup_time_start)->format('H:i') }} - {{ \Carbon\Carbon::parse($order->food->pickup_time_end)->format('H:i') }}
@@ -54,11 +57,19 @@
                                             <div class="flex items-center justify-end gap-3">
                                                 <span class="inline-flex px-3 py-1 rounded-full border border-yellow-200 bg-yellow-50 text-yellow-700 text-xs font-bold tracking-wide">MENUNGGU</span>
                                                 
-                                                <form action="{{ route('order.complete', $order->id) }}" method="POST">
+                                                <form
+                                                    action="{{ route('order.complete', $order->id) }}"
+                                                    method="POST"
+                                                    data-confirm-submit
+                                                    data-confirm-title="Selesaikan pesanan ini?"
+                                                    data-confirm-text="Status pesanan akan diubah menjadi selesai."
+                                                    data-confirm-button="Ya, selesaikan"
+                                                    data-loading-message="Pesanan sedang diselesaikan."
+                                                >
                                                     @csrf
                                                     @method('PATCH')
-                                                    <button type="submit" class="bg-orange-500 hover:bg-orange-600 text-white text-xs font-bold py-1.5 px-3 rounded-lg shadow-sm transition">
-                                                        Selesaikan ✓
+                                                    <button type="submit" data-loading-text="Memproses..." class="bg-orange-500 hover:bg-orange-600 text-white text-xs font-bold py-1.5 px-3 rounded-lg shadow-sm transition">
+                                                        Selesaikan
                                                     </button>
                                                 </form>
                                             </div>

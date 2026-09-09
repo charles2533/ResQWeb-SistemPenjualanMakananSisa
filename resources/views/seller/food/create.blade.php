@@ -3,12 +3,22 @@
         <div class="max-w-4xl mx-auto sm:px-6 lg:px-8">
             
             <div class="mb-6">
-                <a href="{{ route('seller.dashboard') }}" class="text-sm font-semibold text-gray-500 hover:text-orange-500 mb-4 inline-block">&larr; Kembali</a>
+                <a href="{{ route('seller.inventory') }}" class="text-sm font-semibold text-gray-500 hover:text-orange-500 mb-4 inline-block">&larr; Kembali</a>
                 <h1 class="text-3xl font-extrabold text-gray-900 tracking-tight">Input Makanan Sisa</h1>
             </div>
 
             <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
-                <form action="{{ route('food.store') }}" method="POST" enctype="multipart/form-data" class="p-8">
+                <form
+                    action="{{ route('food.store') }}"
+                    method="POST"
+                    enctype="multipart/form-data"
+                    class="p-8"
+                    data-confirm-submit
+                    data-confirm-title="Simpan makanan ini?"
+                    data-confirm-text="Data makanan akan dipublikasikan ke stok penjualan."
+                    data-confirm-button="Ya, simpan"
+                    data-loading-message="Makanan sedang disimpan."
+                >
                     @csrf
                     
                     <div class="bg-gray-50 border border-gray-100 rounded-xl p-6 mb-8">
@@ -59,7 +69,7 @@
                     </div>
 
                     <div class="flex justify-end pt-4">
-                        <button type="submit" class="bg-orange-500 hover:bg-orange-600 text-white font-bold py-3 px-8 rounded-lg shadow-md transition">
+                        <button type="submit" data-loading-text="Menyimpan..." class="bg-orange-500 hover:bg-orange-600 text-white font-bold py-3 px-8 rounded-lg shadow-md transition">
                             SIMPAN MAKANAN
                         </button>
                     </div>

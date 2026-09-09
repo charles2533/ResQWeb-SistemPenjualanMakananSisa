@@ -9,7 +9,7 @@
                 </div>
             </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6 mb-8">
                 <div class="bg-white rounded-2xl shadow-sm border border-slate-100 p-6 flex items-center gap-4 transition hover:shadow-md">
                     <div class="w-14 h-14 rounded-xl bg-blue-50 flex items-center justify-center text-blue-600">
                         <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"></path></svg>
@@ -27,6 +27,17 @@
                     <div>
                         <p class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-1">Total Nilai Transaksi</p>
                         <h3 class="text-2xl font-extrabold text-slate-800">Rp {{ number_format($totalRevenue, 0, ',', '.') }}</h3>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-2xl shadow-sm border border-slate-100 p-6 flex items-center gap-4 transition hover:shadow-md">
+                    <div class="w-14 h-14 rounded-xl bg-amber-50 flex items-center justify-center text-amber-600">
+                        <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8V7m0 10v-1m9-4a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                    </div>
+                    <div>
+                        <p class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-1">Pendapatan Admin</p>
+                        <h3 class="text-2xl font-extrabold text-slate-800">Rp {{ number_format($platformRevenue, 0, ',', '.') }}</h3>
+                        <p class="text-xs text-slate-500 mt-1">Fee customer Rp {{ number_format($customerAdminRevenue, 0, ',', '.') }} + komisi seller Rp {{ number_format($sellerCommissionRevenue, 0, ',', '.') }}</p>
                     </div>
                 </div>
 
@@ -51,6 +62,19 @@
                 </div>
             </div>
 
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                <div class="bg-white rounded-2xl border border-slate-100 p-6">
+                    <p class="text-xs font-bold uppercase tracking-wider text-slate-400 mb-1">Rating Aplikasi</p>
+                    <h3 class="text-3xl font-black text-slate-900">{{ optional($ratingAverages->get('application'))->avg_rating ? number_format($ratingAverages->get('application')->avg_rating, 1) : '-' }}/5</h3>
+                    <p class="text-sm text-slate-500 mt-1">{{ optional($ratingAverages->get('application'))->total_reviews ?? 0 }} review</p>
+                </div>
+                <div class="bg-white rounded-2xl border border-slate-100 p-6">
+                    <p class="text-xs font-bold uppercase tracking-wider text-slate-400 mb-1">Rating Toko</p>
+                    <h3 class="text-3xl font-black text-slate-900">{{ optional($ratingAverages->get('store'))->avg_rating ? number_format($ratingAverages->get('store')->avg_rating, 1) : '-' }}/5</h3>
+                    <p class="text-sm text-slate-500 mt-1">{{ optional($ratingAverages->get('store'))->total_reviews ?? 0 }} review</p>
+                </div>
+            </div>
+
             <div class="bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden">
                 <div class="px-6 py-5 border-b border-slate-100 flex justify-between items-center bg-white">
                     <div>
@@ -67,6 +91,7 @@
                                 <th class="py-4 px-6 text-xs font-bold text-slate-400 uppercase tracking-wider">Pembeli</th>
                                 <th class="py-4 px-6 text-xs font-bold text-slate-400 uppercase tracking-wider">Toko / Resto</th>
                                 <th class="py-4 px-6 text-xs font-bold text-slate-400 uppercase tracking-wider">Item Makanan</th>
+                                <th class="py-4 px-6 text-xs font-bold text-slate-400 uppercase tracking-wider">Admin Fee</th>
                                 <th class="py-4 px-6 text-xs font-bold text-slate-400 uppercase tracking-wider">Status</th>
                             </tr>
                         </thead>
@@ -77,6 +102,7 @@
                                     <td class="py-4 px-6 text-sm font-medium text-slate-800">{{ $order->customer->name }}</td>
                                     <td class="py-4 px-6 text-sm text-slate-500">{{ $order->food->seller->store_name ?? $order->food->seller->name }}</td>
                                     <td class="py-4 px-6 text-sm text-slate-700">{{ $order->food->name }} <span class="text-slate-400">(x{{ $order->quantity }})</span></td>
+                                    <td class="py-4 px-6 text-sm font-semibold text-amber-600">Rp {{ number_format($order->admin_fee, 0, ',', '.') }}</td>
                                     <td class="py-4 px-6 text-sm">
                                         @if($order->status == 'completed')
                                             <span class="inline-flex px-3 py-1 rounded-full bg-green-50 text-green-600 text-xs font-bold tracking-wide">SELESAI</span>
@@ -89,7 +115,7 @@
                                 </tr>
                             @empty
                                 <tr>
-                                    <td colspan="5" class="py-8 text-center text-slate-400 text-sm">Belum ada transaksi di platform.</td>
+                                    <td colspan="6" class="py-8 text-center text-slate-400 text-sm">Belum ada transaksi di platform.</td>
                                 </tr>
                             @endforelse
                         </tbody>
